@@ -1,4 +1,13 @@
-const Vue = require('vue/dist/vue.js');
+'use strict';
+
+const Editor = require('./editor');
+
+window.editor = new Editor();
+
+window.onload = () => {
+  window.editor.open('index.html');
+};
+/*const Vue = require('vue/dist/vue.js');
 const axios = require('axios');
 
 //let formData = new FormData();
@@ -31,4 +40,4 @@ new Vue({
   created() {
     this.updatePageList()
   },
-});
+});*/
