@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.25.0",
     "jquery": "^3.6.0",
+    "uikit": "^3.10.1",
     "vue": "^2.6.14"
   },
   "devDependencies": {

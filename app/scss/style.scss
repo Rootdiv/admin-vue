@@ -1,11 +1,73 @@
-h1 {
-  color: red;
+@import "../../node_modules/uikit/src/scss/variables-theme.scss";
+@import "../../node_modules/uikit/src/scss/mixins-theme.scss";
+@import "../../node_modules/uikit/src/scss/uikit-theme.scss";
+
+$panel_height: 64px;
+
+*,
+:before,
+:after {
+  box-sizing: border-box;
 }
 
 iframe {
   position: absolute;
-  top: 0;
   left: 0;
+  top: $panel_height;
+  width: 100%;
+  height: calc(100vh - #{$panel_height});
+}
+
+.panel {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px;
+  height: $panel_height;
+  border-bottom: 1px solid #000000;
+}
+
+.uk-modal-title {
+  text-align: center;
+}
+
+.uk-button {
+  border-radius: 5px;
+}
+
+.uk-button-primary {
+  border: 2px solid transparent;
+  padding: 0 10px;
+}
+
+.uk-button-default {
+  border: 2px solid #2e8b57;
+
+  &:hover {
+    border-color: #2e8b57;
+  }
+}
+
+.loader {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100vh;
+  background-color: rgba(#000000, 0.5);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.4s;
+
+  &.active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  span {
+    color: #ffffff;
+    fill: #ffffff;
+  }
 }

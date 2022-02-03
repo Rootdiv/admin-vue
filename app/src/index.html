@@ -10,12 +10,29 @@
   </head>
   <body>
     <iframe frameborder="0"></iframe>
-    <!-- <div id="app">
-      <input type="text" v-model="newPageName" />
+    <div id="app">
+      <div class="panel">
+        <button class="uk-button uk-button-primary" uk-toggle="target: #modal-save">Опубликовать</button>
+      </div>
+      <!-- <input type="text" v-model="newPageName" />
       <button v-on:click="createPage">Создать страницу</button>
       <div v-for="(page, index) in pageList">
         <h1>{{ index + 1 }}. {{ page }} <a href="#" v-on:click.prevent="deletePage(page)">(X)</a></h1>
+      </div> -->
+      <div id="modal-save" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+          <h2 class="uk-modal-title">Сохранение</h2>
+          <p>Вы действительно хотите сохранить и опубликовать изменения</p>
+          <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Отмена</button>
+            <button class="uk-button uk-button-primary uk-modal-close" type="button"
+              @click="onBtnSave">Опубликовать</button>
+          </p>
+        </div>
       </div>
-    </div> -->
+      <div class="loader" v-bind:class="{ 'active': showLoader }">
+        <span uk-spinner="ratio: 4.5"></span>
+      </div>
+    </div>
   </body>
 </html>

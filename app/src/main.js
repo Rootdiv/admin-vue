@@ -1,43 +1,31 @@
 'use strict';
 
 const Editor = require('./editor');
+const Vue = require('vue/dist/vue.js');
+const UIkit = require('uikit');
 
 window.editor = new Editor();
-
-window.onload = () => {
-  window.editor.open('index.html');
-};
-/*const Vue = require('vue/dist/vue.js');
-const axios = require('axios');
-
-//let formData = new FormData();
 
 new Vue({
   el: '#app',
   data: {
-    pageList: [],
-    newPageName: '',
+    showLoader: true,
   },
   methods: {
-    createPage() {
-      //formData.append('name', this.newPageName);
-      axios.post('./api/createNewPageHtml.php', { 'name': this.newPageName })
-        .then(() => this.updatePageList())
-        .catch((error) => {
-          alert('Такая страница уже существует!');
-          console.error(error.statusText);
-        });
-    },
-    updatePageList() {
-      axios.get('./api/').then(response => this.pageList = response.data);
-    },
-    deletePage(page) {
-      axios.post('./api/deletePage.php', { 'name': page })
-        .then(() => this.updatePageList())
-        .catch((error) => console.error(error.statusText));
+    onBtnSave() {
+      this.showLoader = true;
+      window.editor.save(() => {
+        this.showLoader = false;
+        UIkit.notification({ message: 'Успешно сохранено!', status: 'success' });
+      }, () => {
+        this.showLoader = false;
+        UIkit.notification({ message: 'Ошибка сохранения!', status: 'danger' });
+      });
     }
   },
   created() {
-    this.updatePageList()
-  },
-});*/
+    window.editor.open('index.html', () => {
+      this.showLoader = false;
+    });
+  }
+});
