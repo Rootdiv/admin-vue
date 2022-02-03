@@ -28,7 +28,7 @@ module.exports = class DOMHelper {
     textNodes.forEach((node, i) => {
       const wrapper = dom.createElement('text-editor');
       node.parentNode.replaceChild(wrapper, node);
-      wrapper.appendChild(node);
+      wrapper.append(node);
       wrapper.contentEditable = 'true';
       wrapper.setAttribute('nodeid', i);
     });
