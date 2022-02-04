@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = class EditorText {
   constructor(element, virtualElement) {
     this.element = element;
