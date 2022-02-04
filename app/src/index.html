@@ -12,13 +12,39 @@
     <iframe frameborder="0"></iframe>
     <div id="app">
       <div class="panel">
-        <button class="uk-button uk-button-primary" uk-toggle="target: #modal-save">Опубликовать</button>
+        <div>
+          <button class="uk-button uk-button-default" uk-toggle="target: #modal-open">Открыть</button>
+        </div>
+        <div>
+          <button class="uk-button uk-button-primary" uk-toggle="target: #modal-save">Опубликовать</button>
+          <button class="uk-button uk-button-primary btn-down">
+            <span uk-icon="chevron-down"></span>
+          </button>
+          <div uk-dropdown class="dropdown">
+            <button class="uk-button uk-button-default" uk-toggle="target: #modal-backup">
+              Восстановить из бэкапа
+            </button>
+          </div>
+        </div>
       </div>
       <!-- <input type="text" v-model="newPageName" />
       <button v-on:click="createPage">Создать страницу</button>
       <div v-for="(page, index) in pageList">
         <h1>{{ index + 1 }}. {{ page }} <a href="#" v-on:click.prevent="deletePage(page)">(X)</a></h1>
       </div> -->
+      <div id="modal-open" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+          <h2 class="uk-modal-title">Открыть</h2>
+          <ul class="uk-list uk-list-striped">
+            <li v-for="page in pageList">
+              <a class="uk-link-muted uk-modal-close" href="#" v-on:click.prevent="openPage(page)">{{ page }}</a>
+            </li>
+          </ul>
+          <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Отмена</button>
+          </p>
+        </div>
+      </div>
       <div id="modal-save" uk-modal>
         <div class="uk-modal-dialog uk-modal-body">
           <h2 class="uk-modal-title">Сохранение</h2>
@@ -27,6 +53,22 @@
             <button class="uk-button uk-button-default uk-modal-close" type="button">Отмена</button>
             <button class="uk-button uk-button-primary uk-modal-close" type="button"
               @click="onBtnSave">Опубликовать</button>
+          </p>
+        </div>
+      </div>
+      <div id="modal-backup" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+          <h2 class="uk-modal-title">Восстановление из бэкапа</h2>
+          <span v-if="backupList.length < 1">Не найдено резервных копий этой страницы!</span>
+          <ul class="uk-list uk-list-striped">
+            <li v-for="backup in backupList">
+              <a class="uk-link-muted uk-modal-close" href="#" v-on:click.prevent="restoreBackup(backup)">
+                Резервная копия от {{ backup.time }}
+              </a>
+            </li>
+          </ul>
+          <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Отмена</button>
           </p>
         </div>
       </div>

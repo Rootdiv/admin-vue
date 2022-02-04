@@ -1,10 +1,11 @@
 <?php
 $_POST = json_decode(file_get_contents('php://input'), true);
 
-$del_file = '../../' . $_POST['name'];
+$file = $_POST['file'];
+$page = $_POST['page'];
 
-if(file_exists($del_file)) {
-  unlink($del_file);
+if($file && $page) {
+  copy('../backups/' . $file, '../../' . $page);
 } else {
   header('HTTP/1.1 400 Bad Request');
 }
