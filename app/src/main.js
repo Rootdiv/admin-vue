@@ -11,7 +11,7 @@ UIkit.use(Icons);
 
 window.editor = new Editor();
 
-new Vue({
+window.vue = new Vue({
   el: '#app',
   data: {
     page: 'index.html',
@@ -35,7 +35,7 @@ new Vue({
         },
         () => {
           this.showLoader = false;
-          UIkit.notification({ message: 'Ошибка сохранения!', status: 'danger' });
+          this.errorNotification('Ошибка сохранения!');
         },
       );
     },
@@ -74,6 +74,15 @@ new Vue({
     },
     applyMeta() {
       window.editor.metaEditor.setMeta(this.meta.title, this.meta.keywords, this.meta.description);
+    },
+    enableLoader() {
+      this.showLoader = true;
+    },
+    disableLoader() {
+      this.showLoader = false;
+    },
+    errorNotification(msg) {
+      UIkit.notification({ message: msg, status: 'danger' });
     }
   },
   created() {
