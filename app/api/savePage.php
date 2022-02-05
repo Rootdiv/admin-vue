@@ -5,21 +5,26 @@ if ($_SESSION['auth'] !== true) {
   die;
 }
 
+$folder = '../backups/';
 $_POST = json_decode(file_get_contents('php://input'), true);
 
 $file = $_POST['pageName'];
 $new_html = $_POST['html'];
 
-$backups = json_decode(file_get_contents('../backups/backups.json'));
-if(!is_array($backups)) {
+if (!is_dir($folder)) {
+  mkdir($folder);
+}
+
+$backups = json_decode(file_get_contents($folder . 'backups.json'));
+if (!is_array($backups)) {
   $backups = [];
 }
 
-if($new_html && $file) {
+if ($new_html && $file) {
   $backupFN = uniqid() . '.html';
-  copy('../../' . $file, '../backups/' . $backupFN);
+  copy('../../' . $file, $folder . $backupFN);
   array_push($backups, ['page' => $file, 'file' => $backupFN, 'time' => date('H:i:s d.m.Y')]);
-  file_put_contents('../backups/backups.json', json_encode($backups));
+  file_put_contents($folder . 'backups.json', json_encode($backups));
 
   file_put_contents('../../' . $file, $new_html);
 } else {

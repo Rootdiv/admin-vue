@@ -71,11 +71,9 @@ window.vue = new Vue({
           return axios.post('./api/restoreBackup.php', { page: this.page, file: backup.file });
         })
         .then(() => {
-          window.editor.open(this.page, () => {
-            this.showLoader = false;
-          });
-        }).catch(() => {
-          console.log('Восстановление отменено');
+          this.openPage(this.page);
+        }).catch((err) => {
+          console.warn('Восстановление отменено пользователем или произошла ошибка ' + err.message);
         });
     },
     applyMeta() {
