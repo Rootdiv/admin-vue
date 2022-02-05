@@ -12,7 +12,7 @@
     <iframe frameborder="0"></iframe>
     <input id="img-upload" type="file" accept="image/*" hidden />
     <div id="app">
-      <div class="panel">
+      <div class="panel" v-if="auth">
         <div>
           <button class="uk-button uk-button-default" uk-toggle="target: #modal-open">Открыть</button>
           <button class="uk-button uk-button-default" uk-toggle="target: #modal-meta">Редактор META</button>
@@ -27,6 +27,7 @@
               Восстановить из бэкапа
             </button>
           </div>
+          <button class="uk-button uk-button-default" uk-toggle="target: #modal-logout">Выход</button>
         </div>
       </div>
       <div id="modal-open" uk-modal>
@@ -92,6 +93,31 @@
       </div>
       <div class="loader" v-bind:class="{ 'active': showLoader }">
         <span uk-spinner="ratio: 4.5"></span>
+      </div>
+      <div class="login-container" v-if="!auth">
+        <div class="login">
+          <h2 class="uk-modal-title">Авторизация</h2>
+          <div class="uk-margin">
+            <p>Введите пароль</p>
+            <input class="uk-input" type="password" placeholder="Пароль" v-model="password" v-on:keyup.enter="login" />
+            <span class="login-error" v-if="loginError">
+              Неверный пароль! Пароль должен быть не менее 10 символов
+            </span>
+          </div>
+          <p class="uk-text-right">
+            <button class="uk-button uk-button-primary" type="button" @click="login">Войти</button>
+          </p>
+        </div>
+      </div>
+      <div id="modal-logout" uk-modal>
+        <div class="uk-modal-dialog uk-modal-body">
+          <h2 class="uk-modal-title">Выход</h2>
+          <p>Вы действительно хотите покинуть админку? Не сохранённые изменения могут быть потеряны!</p>
+          <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Отмена</button>
+            <button class="uk-button uk-button-primary uk-modal-close" type="button" @click="logout">Выйти</button>
+          </p>
+        </div>
       </div>
     </div>
   </body>

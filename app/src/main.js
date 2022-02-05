@@ -23,6 +23,9 @@ window.vue = new Vue({
       keywords: '',
       description: '',
     },
+    auth: false,
+    password: '',
+    loginError: false,
   },
   methods: {
     onBtnSave() {
@@ -66,14 +69,43 @@ window.vue = new Vue({
         .then(() => {
           this.showLoader = true;
           return axios.post('./api/restoreBackup.php', { page: this.page, file: backup.file });
-        }).then(() => {
+        })
+        .then(() => {
           window.editor.open(this.page, () => {
             this.showLoader = false;
           });
+        }).catch(() => {
+          console.log('Восстановление отменено');
         });
     },
     applyMeta() {
       window.editor.metaEditor.setMeta(this.meta.title, this.meta.keywords, this.meta.description);
+    },
+    login() {
+      if (this.password.length > 10) {
+        axios.post('./api/login.php', { password: this.password }).then(res => {
+          if (res.data.auth === true) {
+            this.auth = true;
+            this.start();
+          } else {
+            this.loginError = true;
+          }
+        });
+      } else {
+        this.loginError = true;
+      }
+    },
+    logout() {
+      axios.get('./api/logout.php').then(() => {
+        window.location.replace('/vue');
+      });
+    },
+    start() {
+      this.openPage(this.page);
+      axios.get('./api/pageList.php').then(response => {
+        this.pageList = response.data;
+      });
+      this.loadBackupList();
     },
     enableLoader() {
       this.showLoader = true;
@@ -83,13 +115,14 @@ window.vue = new Vue({
     },
     errorNotification(msg) {
       UIkit.notification({ message: msg, status: 'danger' });
-    }
+    },
   },
   created() {
-    this.openPage(this.page);
-    axios.get('./api/pageList.php').then(response => {
-      this.pageList = response.data;
+    axios.get('./api/checkAuth.php').then(res => {
+      if (res.data.auth === true) {
+        this.auth = true;
+        this.start();
+      }
     });
-    this.loadBackupList();
   },
 });

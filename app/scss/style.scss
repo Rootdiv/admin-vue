@@ -20,22 +20,24 @@ iframe {
 
 .panel {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   padding: 12px;
   height: $panel_height;
   border-bottom: 1px solid #000000;
 
-  div:last-child {
-    border-radius: 5px;
-    overflow: hidden;
-  }
-
   .uk-button-primary {
-    padding: 0 15px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 6px 15px;
   }
 
   .btn-down {
     margin-left: -5px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
   }
 
   .dropdown {
@@ -44,6 +46,11 @@ iframe {
   }
 }
 
+.uk-button {
+  padding: 7px 30px;
+  font-size: 14px;
+  line-height: 1.7;
+}
 
 .uk-modal-title {
   text-align: center;
@@ -53,7 +60,6 @@ iframe {
   .uk-button-primary {
     border: 2px solid transparent;
     border-radius: 5px;
-    padding: 0 10px;
   }
 }
 
@@ -88,5 +94,38 @@ iframe {
   span {
     color: #ffffff;
     fill: #ffffff;
+  }
+}
+
+.login-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  .login {
+    width: 550px;
+    padding: 30px;
+    border-radius: 4px;
+    background-color: #fff;
+
+    &-error {
+      color: #ff0000;
+    }
+
+    p,
+    input {
+      margin-bottom: 5px;
+    }
+
+    .uk-button-primary {
+      border: 2px solid transparent;
+      border-radius: 5px;
+    }
   }
 }
